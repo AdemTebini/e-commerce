@@ -1,0 +1,34 @@
+<aside class="admin-side-nav" [class.collapsed]="isCollapsed">
+  <button
+    type="button"
+    class="nav-toggle"
+    aria-label="Toggle navigation menu"
+    [attr.aria-expanded]="!isCollapsed"
+    (click)="toggleNav()"
+  >
+    <span class="dot"></span>
+    <span class="dot"></span>
+    <span class="dot"></span>
+  </button>
+
+  <nav class="nav-links" role="navigation" aria-label="Admin menu">
+    <a
+      class="linkst"
+      routerLink="/admin/products"
+      routerLinkActive="active"
+      [routerLinkActiveOptions]="{ exact: true }"
+      (click)="closeNav()"
+    >
+      Products List
+    </a>
+    <a
+      class="linkst"
+      routerLink="/admin/products/add"
+      routerLinkActive="active"
+      [routerLinkActiveOptions]="{ exact: true }"
+      (click)="closeNav()"
+    >
+      Add Product
+    </a>
+  </nav>
+</aside>

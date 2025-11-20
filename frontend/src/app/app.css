@@ -1,0 +1,113 @@
+:host {
+	display: block;
+}
+
+.app-layout {
+	position: relative;
+	min-height: 100vh;
+	padding: clamp(1.5rem, 4vw, 3rem);
+	overflow: hidden;
+	isolation: isolate;
+	display: flex;
+	justify-content: center;
+	align-items: stretch;
+}
+
+.app-aurora {
+	position: absolute;
+	filter: blur(70px);
+	opacity: 0.65;
+	mix-blend-mode: screen;
+	animation: floaty 18s ease-in-out infinite;
+}
+
+.app-aurora--one {
+	width: 480px;
+	height: 480px;
+	background: radial-gradient(circle, rgba(99, 102, 241, 0.7), transparent 60%);
+	top: -120px;
+	left: -80px;
+}
+
+.app-aurora--two {
+	width: 520px;
+	height: 520px;
+	background: radial-gradient(circle, rgba(15, 186, 129, 0.6), transparent 55%);
+	bottom: -140px;
+	right: -60px;
+	animation-delay: 4s;
+}
+
+.app-aurora--three {
+	width: 360px;
+	height: 360px;
+	background: radial-gradient(circle, rgba(244, 183, 64, 0.55), transparent 55%);
+	bottom: 20%;
+	left: 50%;
+	transform: translateX(-50%);
+	animation-delay: 8s;
+}
+
+.app-chrome {
+	width: min(1400px, 100%);
+	background: rgba(4, 10, 25, 0.78);
+	border: 1px solid rgba(255, 255, 255, 0.08);
+	border-radius: 28px;
+	box-shadow: 0 30px 120px rgba(3, 9, 26, 0.45);
+	backdrop-filter: blur(30px);
+	display: flex;
+	flex-direction: column;
+	gap: 1.5rem;
+	padding: clamp(1rem, 2vw, 1.75rem);
+}
+
+.app-body {
+	display: flex;
+	gap: 1.5rem;
+	align-items: flex-start;
+}
+
+.app-shell {
+	flex: 1;
+	min-height: calc(100vh - 220px);
+	background: var(--surface);
+	border-radius: 22px;
+	padding: clamp(1.25rem, 3vw, 2.5rem);
+	box-shadow: var(--shadow-soft);
+	border: 1px solid rgba(15, 186, 129, 0.08);
+	animation: slideUp var(--transition-slow);
+}
+
+.app-shell > *:first-child {
+	margin-top: 0;
+}
+
+@media (max-width: 1200px) {
+	.app-body {
+		align-items: stretch;
+	}
+}
+
+@media (max-width: 960px) {
+	.app-body {
+		flex-direction: column;
+	}
+
+	.app-shell {
+		min-height: auto;
+	}
+
+	.app-chrome {
+		border-radius: 20px;
+	}
+}
+
+@media (max-width: 640px) {
+	.app-layout {
+		padding: 1rem;
+	}
+
+	.app-chrome {
+		padding: 0.75rem;
+	}
+}

@@ -1,0 +1,61 @@
+:host {
+  display: block;
+}
+
+.admin-header {
+  background: rgba(9, 15, 35, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 20px;
+  padding: 0.5rem;
+  position: sticky;
+  top: 0;
+  z-index: 60;
+  box-shadow: 0 18px 60px rgba(4, 8, 22, 0.55);
+  backdrop-filter: blur(20px);
+}
+
+.container {
+  margin: 0 auto;
+  max-width: 1200px;
+  padding: 0.8rem 1rem;
+  display: flex;
+  justify-content: center;
+}
+
+.logo {
+  display: inline-flex;
+  padding: 0.4rem 1rem;
+  border-radius: var(--radius-pill);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.05);
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast), border var(--transition-fast);
+}
+
+.logo img {
+  height: 56px;
+  width: auto;
+  object-fit: contain;
+}
+
+.logo:focus-visible,
+.logo:hover {
+  transform: translateY(-1px) scale(1.02);
+  border-color: rgba(99, 102, 241, 0.4);
+  box-shadow: 0 12px 35px rgba(99, 102, 241, 0.25);
+  outline: none;
+}
+
+@media (max-width: 640px) {
+  .logo img {
+    height: 48px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition: none !important;
+    animation: none !important;
+  }
+}

@@ -1,218 +1,59 @@
-/* Layout */
-.container {
-	min-height: 100vh;
-	background: linear-gradient(135deg, #43c6ac 0%, #191654 100%);
-	padding: 2rem;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-}
-
-.card {
-	background: #fff;
-	border-radius: 20px;
-	max-width: 700px;
-	width: 100%;
-	padding: 3rem;
-	box-shadow: 0 25px 60px rgba(0, 0, 0, 0.25);
-	animation: fadeIn 0.5s ease;
-}
-
-@keyframes fadeIn {
-	from {
-		opacity: 0;
-		transform: translateY(30px);
-	}
-	to {
-		opacity: 1;
-		transform: translateY(0);
-	}
-}
-
-.header {
-	text-align: center;
-	margin-bottom: 2rem;
-}
-
-.header h2 {
-	margin: 0;
-	color: #1a202c;
-	font-size: 2rem;
-	font-weight: 700;
-}
-
-.subtitle {
-	margin-top: 0.5rem;
-	color: #718096;
-	font-size: 0.95rem;
-}
-
-.form {
-	display: flex;
-	flex-direction: column;
-	gap: 1.5rem;
-}
-
-.form-group {
-	display: flex;
-	flex-direction: column;
-	gap: 0.5rem;
-}
-
-.form-row {
-	display: grid;
-	grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-	gap: 1.5rem;
-}
-
-.form-group label {
-	font-weight: 600;
-	color: #2d3748;
-}
-
-.form-control {
-	padding: 0.9rem 1rem;
-	border: 2px solid #e2e8f0;
-	border-radius: 12px;
-	font-size: 1rem;
-	background: #f8fafc;
-	transition: all 0.25s ease;
-}
-
-.form-control:focus {
-	outline: none;
-	border-color: #43c6ac;
-	background: #fff;
-	box-shadow: 0 0 0 3px rgba(67, 198, 172, 0.2);
-}
-
-.form-control::placeholder {
-	color: #a0aec0;
-}
-
-.image-preview {
-	border: 2px dashed #cbd5e0;
-	border-radius: 12px;
-	padding: 1rem;
-	background: #f8fafc;
-	display: flex;
-	justify-content: center;
-}
-
-.image-preview img {
-	max-width: 240px;
-	border-radius: 10px;
-	object-fit: contain;
-}
-
-.file-input-wrapper {
-	position: relative;
-}
-
-.file-input {
-	position: absolute;
-	width: 0;
-	height: 0;
-	opacity: 0;
-}
-
-.file-label {
-	border: 2px dashed #a0aec0;
-	border-radius: 12px;
-	padding: 0.9rem 1rem;
-	color: #4a5568;
-	background: #edf2f7;
-	text-align: center;
-	cursor: pointer;
-	transition: all 0.25s ease;
+:host {
 	display: block;
 }
 
-.file-label:hover {
-	border-color: #43c6ac;
-	color: #2c7a7b;
-	background: #ffffff;
+.form-shell {
+	background: var(--surface);
+	border-radius: var(--radius-lg);
+	padding: clamp(1.5rem, 3vw, 3rem);
+	box-shadow: var(--shadow-soft);
+	border: 1px solid rgba(99, 102, 241, 0.12);
+}
+
+.subtext {
+	color: var(--text-muted);
+}
+
+.form-grid {
+	display: flex;
+	flex-direction: column;
+	gap: 1.4rem;
+}
+
+.image-preview {
+	border: 1px dashed rgba(99, 102, 241, 0.35);
+	border-radius: 18px;
+	padding: 1rem;
+	background: rgba(99, 102, 241, 0.04);
+	display: inline-flex;
+	justify-content: center;
+	min-height: 160px;
+}
+
+.image-preview img {
+	max-width: 220px;
+	border-radius: 14px;
+	box-shadow: var(--shadow-soft);
 }
 
 .actions {
 	display: flex;
-	justify-content: flex-end;
-	gap: 1rem;
-	margin-top: 1.5rem;
-}
-
-.btn-submit,
-.btn-secondary {
-	border: none;
-	border-radius: 12px;
-	padding: 0.9rem 1.8rem;
-	font-weight: 600;
-	cursor: pointer;
-	font-size: 0.95rem;
-	transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-.btn-secondary {
-	background: #edf2f7;
-	color: #4a5568;
-}
-
-.btn-secondary:hover {
-	transform: translateY(-1px);
-	box-shadow: 0 5px 15px rgba(76, 81, 191, 0.15);
-}
-
-.btn-submit {
-	background: linear-gradient(135deg, #43c6ac 0%, #191654 100%);
-	color: #fff;
-	box-shadow: 0 10px 25px rgba(67, 198, 172, 0.35);
-}
-
-.btn-submit:hover {
-	transform: translateY(-1px);
-	box-shadow: 0 12px 30px rgba(67, 198, 172, 0.55);
-}
-
-.alert {
-	margin-top: 1.5rem;
-	padding: 1rem 1.25rem;
-	border-radius: 12px;
-	display: flex;
-	align-items: center;
 	gap: 0.75rem;
-	font-weight: 500;
+	justify-content: flex-end;
+	flex-wrap: wrap;
 }
 
-.alert svg {
-	flex-shrink: 0;
-}
-
-.alert-success {
-	background: #c6f6d5;
-	border: 1px solid #9ae6b4;
-	color: #22543d;
-}
-
-.alert-error {
-	background: #fed7d7;
-	border: 1px solid #feb2b2;
-	color: #742a2a;
+.actions .btn {
+	min-width: 140px;
 }
 
 @media (max-width: 640px) {
-	.container {
-		padding: 1rem;
-	}
-
-	.card {
-		padding: 2rem 1.5rem;
+	.form-shell {
+		padding: 1.25rem;
 	}
 
 	.actions {
 		flex-direction: column;
-	}
-
-	.actions button {
-		width: 100%;
+		align-items: stretch;
 	}
 }

@@ -26,34 +26,80 @@ ecommerce/
 ├── sql/
 │   └── ecommerce.sql
 │
-└── frontend/
-    ├── package.json
-    ├── angular.json
-    ├── proxy.conf.json
-    ├── src/
-    │   ├── index.html
-    │   ├── main.ts
-    │   ├── environments/
-    │   │   └── environment.ts
-    │   └── app/
-    │       ├── app.module.ts
-    │       ├── app-routing.module.ts
-    │       ├── services/
-    │       │   └── api.service.ts
-    │       ├── admin/
-    │       │   ├── admin.module.ts
-    │       │   ├── admin-routing.module.ts
-    │       │   └── products/
-    │       │       ├── products.module.ts
-    │       │       ├── products-routing.module.ts
-    │       │       ├── add/
-    │       │       │   ├── add.component.ts
-    │       │       │   └── add.component.html
-    │       │       ├── list/
-    │       │       │   ├── list.component.ts
-    │       │       │   └── list.component.html
-    │       │       └── edit/
-    │       │           ├── edit.component.ts
-    │       │           └── edit.component.html
-    │       └── client/                 # optional client pages
-    └── ...
+├── frontend/
+│   ├── package.json
+│   ├── angular.json
+│   ├── tsconfig.json
+│   ├── proxy.conf.json
+│   ├── .eslintrc.json
+│   ├── .prettierrc
+│   ├── src/
+│   │   ├── index.html
+│   │   ├── main.ts
+│   │   ├── styles.scss               # global styles
+│   │   ├── environments/
+│   │   │   ├── environment.ts
+│   │   │   └── environment.prod.ts
+│   │   ├── assets/
+│   │   │   ├── images/
+│   │   │   └── icons/
+│   │   └── app/
+│   │       ├── app.module.ts
+│   │       ├── app-routing.module.ts
+│   │       ├── core/
+│   │       │   ├── guards/
+│   │       │   │   ├── auth.guard.ts
+│   │       │   │   └── admin.guard.ts
+│   │       │   ├── interceptors/
+│   │       │   │   ├── auth.interceptor.ts
+│   │       │   │   └── error.interceptor.ts
+│   │       │   ├── services/
+│   │       │   │   ├── api.service.ts
+│   │       │   │   ├── auth.service.ts
+│   │       │   │   ├── products.service.ts
+│   │       │   │   ├── cart.service.ts
+│   │       │   │   └── orders.service.ts
+│   │       │   └── models/
+│   │       │       ├── user.model.ts
+│   │       │       ├── product.model.ts
+│   │       │       ├── cart-item.model.ts
+│   │       │       └── order.model.ts
+│   │       │
+│   │       ├── shared/
+│   │       │   ├── components/
+│   │       │   │   ├── navbar/
+│   │       │   │   ├── footer/
+│   │       │   │   ├── product-card/
+│   │       │   │   └── pagination/
+│   │       │   ├── pipes/
+│   │       │   └── directives/
+│   │       │
+│   │       ├── auth/
+│   │       │   ├── login/
+│   │       │   │   ├── login.component.ts
+│   │       │   │   └── login.component.html
+│   │       │   └── register/
+│   │       │       ├── register.component.ts
+│   │       │       └── register.component.html
+│   │       │
+│   │       ├── client/
+│   │       │   ├── home/
+│   │       │   ├── shop/
+│   │       │   │   ├── product-list/
+│   │       │   │   └── product-detail/
+│   │       │   ├── cart/
+│   │       │   ├── checkout/
+│   │       │   └── profile/
+│   │       │
+│   │       └── admin/
+│   │           ├── admin.module.ts
+│   │           ├── admin-routing.module.ts
+│   │           └── products/
+│   │               ├── products.module.ts
+│   │               ├── products-routing.module.ts
+│   │               ├── add/
+│   │               ├── list/
+│   │               └── edit/
+│   │
+│   ├── cypress/                      # e2e tests
+│   ├── public/                       # favicon, robots.txt, sitemap.xml

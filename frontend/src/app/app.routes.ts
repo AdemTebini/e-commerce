@@ -1,8 +1,8 @@
 import { Routes } from '@angular/router';
 
 export const routes: Routes = [
-  { path: '', redirectTo: 'admin/products/add', pathMatch: 'full' },
+  { path: '', redirectTo: 'admin/products', pathMatch: 'full' },
   { path: 'admin', loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule) },
-  { path: '**', redirectTo: 'admin/products/add' }
+  { path: '**', redirectTo: 'admin/products' }
 ];
 

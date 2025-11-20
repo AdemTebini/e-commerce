@@ -1,1 +1,15 @@
-<router-outlet></router-outlet>
+<div class="app-layout">
+	<div class="app-aurora app-aurora--one"></div>
+	<div class="app-aurora app-aurora--two"></div>
+	<div class="app-aurora app-aurora--three"></div>
+
+	<section class="app-chrome glass-panel">
+		<app-admin-header></app-admin-header>
+		<div class="app-body">
+			<app-admin-side-nav></app-admin-side-nav>
+			<main class="app-shell" role="main">
+				<router-outlet></router-outlet>
+			</main>
+		</div>
+	</section>
+</div>

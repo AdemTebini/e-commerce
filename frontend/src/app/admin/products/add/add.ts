@@ -57,16 +57,19 @@ export class AddComponent {
       this.msg = 'Product added with id: ' + res.product_id;
       this.err = '';
 
-      // reset fields
-      this.title = '';
-      this.description = '';
-      this.price = 0;
-      this.stock = 0;
-      this.file = undefined;
+      this.resetForm();
 
     } catch (e: any) {
       this.err = e?.error?.error || 'Error';
       this.msg = '';
     }
+  }
+
+  resetForm() {
+    this.title = '';
+    this.description = '';
+    this.price = 0;
+    this.stock = 0;
+    this.file = undefined;
   }
 }
