@@ -1,0 +1,15 @@
+{
+  "/api": {
+    "target": "http://localhost/ecommerce/backend/public",
+    "secure": false,
+    "changeOrigin": true,
+    "logLevel": "debug"
+  },
+  "/uploads": {
+    "target": "http://localhost/ecommerce/backend/public/uploads",
+    "secure": false,
+    "changeOrigin": true,
+    "logLevel": "debug",
+    "pathRewrite": { "^/uploads": "" }
+  }
+}

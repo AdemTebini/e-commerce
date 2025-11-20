@@ -1,0 +1,93 @@
+<div class="container">
+  <div class="card">
+    <div class="header">
+      <h2>Add New Product</h2>
+      <p class="subtitle">Fill in the details below to add a new product</p>
+    </div>
+
+    <form class="form">
+      <div class="form-group">
+        <label for="title">Product Title</label>
+        <input 
+          id="title"
+          name="title"
+          [(ngModel)]="title" 
+          type="text" 
+          class="form-control"
+          placeholder="Enter product title"
+        >
+      </div>
+
+      <div class="form-group">
+        <label for="description">Description</label>
+        <textarea 
+          id="description"
+          name="description"
+          [(ngModel)]="description" 
+          rows="4" 
+          class="form-control"
+          placeholder="Enter product description"
+        ></textarea>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="price">Price ($)</label>
+          <input 
+            id="price"
+            name="price"
+            [(ngModel)]="price" 
+            type="number" 
+            step="0.01" 
+            class="form-control"
+            placeholder="0.00"
+          >
+        </div>
+
+        <div class="form-group">
+          <label for="stock">Stock Quantity</label>
+          <input 
+            id="stock"
+            name="stock"
+            [(ngModel)]="stock" 
+            type="number" 
+            class="form-control"
+            placeholder="0"
+          >
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="image">Product Image</label>
+        <div class="file-input-wrapper">
+          <input 
+            id="image"
+            type="file" 
+            (change)="onFileChange($event)"
+            class="file-input"
+            accept="image/*"
+          >
+          <label class="file-label" for="image">{{ file?.name || 'Choose file...' }}</label>
+        </div>
+      </div>
+
+      <button type="button" (click)="addProduct()" class="btn-submit">
+        <span>Add Product</span>
+      </button>
+
+      <div *ngIf="msg" class="alert alert-success">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+          <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+        </svg>
+        {{ msg }}
+      </div>
+      
+      <div *ngIf="err" class="alert alert-error">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+          <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"/>
+        </svg>
+        {{ err }}
+      </div>
+    </form>
+  </div>
+</div>

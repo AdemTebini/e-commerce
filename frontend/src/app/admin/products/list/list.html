@@ -1,0 +1,27 @@
+<div>
+  <h2>Products</h2>
+  <button (click)="goAdd()">Add Product</button>
+  <div *ngIf="loading">Loading...</div>
+  <div *ngIf="err" style="color:red">{{err}}</div>
+  <table *ngIf="products.length">
+    <thead><tr><th>ID</th><th>Title</th><th>Price</th><th>Stock</th><th>Image</th><th>Actions</th></tr></thead>
+    <tbody>
+      <tr *ngFor="let p of products">
+        <td>{{p.id}}</td>
+        <td>{{p.title}}</td>
+        <td>{{p.price}}</td>
+        <td>{{p.stock}}</td>
+        <td>
+          <ng-container *ngIf="imageUrl(p.main_image) as imgSrc">
+            <img [src]="imgSrc" width="80" alt="Product image">
+          </ng-container>
+        </td>
+        <td>
+          <button (click)="goEdit(p.id)">Edit</button>
+          <button (click)="deleteProduct(p.id)">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <div *ngIf="!products.length && !loading">No products</div>
+</div>

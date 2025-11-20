@@ -1,0 +1,59 @@
+ecommerce/
+├── backend/
+│   ├── public/
+│   │   ├── index.php
+│   │   ├── .htaccess
+│   │   └── uploads/                # where images saved
+│   │
+│   ├── src/
+│   │   ├── config/
+│   │   │   └── db.php
+│   │   │
+│   │   ├── controllers/
+│   │   │   ├── AuthController.php
+│   │   │   ├── ProductController.php
+│   │   │   └── UploadController.php
+│   │   │
+│   │   ├── models/
+│   │   │   ├── User.php
+│   │   │   └── Product.php
+│   │   │
+│   │   └── routes.php
+│   │
+│   ├── .env
+│   └── vendor/                      # optional (composer)
+│
+├── sql/
+│   └── ecommerce.sql
+│
+└── frontend/
+    ├── package.json
+    ├── angular.json
+    ├── proxy.conf.json
+    ├── src/
+    │   ├── index.html
+    │   ├── main.ts
+    │   ├── environments/
+    │   │   └── environment.ts
+    │   └── app/
+    │       ├── app.module.ts
+    │       ├── app-routing.module.ts
+    │       ├── services/
+    │       │   └── api.service.ts
+    │       ├── admin/
+    │       │   ├── admin.module.ts
+    │       │   ├── admin-routing.module.ts
+    │       │   └── products/
+    │       │       ├── products.module.ts
+    │       │       ├── products-routing.module.ts
+    │       │       ├── add/
+    │       │       │   ├── add.component.ts
+    │       │       │   └── add.component.html
+    │       │       ├── list/
+    │       │       │   ├── list.component.ts
+    │       │       │   └── list.component.html
+    │       │       └── edit/
+    │       │           ├── edit.component.ts
+    │       │           └── edit.component.html
+    │       └── client/                 # optional client pages
+    └── ...
