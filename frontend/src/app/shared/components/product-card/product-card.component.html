@@ -1,0 +1,11 @@
+<div class="card" *ngIf="product">
+  <img *ngIf="product.main_image" [src]="product.main_image" [alt]="product.title" />
+
+  <div class="card-body">
+    <h3>{{ product.title }}</h3>
+    <p class="price">{{ product.price | price }}</p>
+    <p class="description">{{ product.description | truncate: 120 }}</p>
+  </div>
+
+  <button type="button" (click)="emitAction()">{{ actionLabel }}</button>
+</div>

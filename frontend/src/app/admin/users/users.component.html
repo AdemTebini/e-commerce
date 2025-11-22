@@ -1,0 +1,89 @@
+<section class="users-page">
+  <div class="users-header">
+    <div>
+      <h1>Gestion des Utilisateurs</h1>
+      <p class="subtitle">Liste de tous les utilisateurs inscrits</p>
+    </div>
+    <button type="button" class="btn-refresh" (click)="loadUsers()">
+      <span class="icon">↻</span>
+      Actualiser
+    </button>
+  </div>
+
+  <div *ngIf="loading" class="loading-state">
+    <div class="spinner"></div>
+    <p>Chargement des utilisateurs...</p>
+  </div>
+
+  <div *ngIf="err" class="error-message">
+    <span class="icon">⚠</span>
+    {{ err }}
+  </div>
+
+  <div *ngIf="!loading && !users.length" class="empty-state">
+    <div class="empty-icon">👥</div>
+    <h2>Aucun utilisateur</h2>
+    <p>Les utilisateurs inscrits apparaîtront ici</p>
+  </div>
+
+  <div *ngIf="!loading && users.length" class="users-stats">
+    <div class="stat-card">
+      <div class="stat-icon">👥</div>
+      <div class="stat-content">
+        <span class="stat-label">Total Utilisateurs</span>
+        <span class="stat-value">{{ users.length }}</span>
+      </div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon">👑</div>
+      <div class="stat-content">
+        <span class="stat-label">Administrateurs</span>
+        <span class="stat-value">{{ countAdmins() }}</span>
+      </div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon">🛍️</div>
+      <div class="stat-content">
+        <span class="stat-label">Clients</span>
+        <span class="stat-value">{{ countClients() }}</span>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="!loading && users.length" class="users-grid">
+    <article *ngFor="let user of users" class="user-card">
+      <div class="user-avatar">
+        <div class="avatar-circle" [class.admin]="user.role === 'admin'">
+          {{ getInitials(user.name) }}
+        </div>
+        <div *ngIf="user.role === 'admin'" class="admin-badge">
+          <span class="badge-icon">⭐</span>
+          Admin
+        </div>
+      </div>
+
+      <div class="user-info">
+        <h3 class="user-name">{{ user.name }}</h3>
+        <div class="user-email">
+          <span class="email-icon">✉️</span>
+          {{ user.email }}
+        </div>
+
+        <div class="user-details">
+          <div class="detail-item" *ngIf="user.phone">
+            <span class="detail-icon">📞</span>
+            <span class="detail-text">{{ user.phone }}</span>
+          </div>
+          <div class="detail-item" *ngIf="user.created_at">
+            <span class="detail-icon">📅</span>
+            <span class="detail-text">{{ user.created_at | date:'shortDate' }}</span>
+          </div>
+        </div>
+
+        <div class="user-role" [ngClass]="user.role">
+          {{ getRoleLabel(user.role) }}
+        </div>
+      </div>
+    </article>
+  </div>
+</section>

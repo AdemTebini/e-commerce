@@ -1,3 +1,13 @@
 RewriteEngine On
-RewriteCond %{REQUEST_FILENAME} !-f
+
+# Serve existing files or directories directly
+RewriteCond %{REQUEST_FILENAME} -f [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^ - [L]
+
+# Map /api/<resource>/* to /api/<resource>.php when the script exists
+RewriteCond %{DOCUMENT_ROOT}/api/%1.php -f
+RewriteRule ^api/([^/]+)(/.*)?$ api/%1.php$2 [QSA,L]
+
+# Fallback to the front controller router
 RewriteRule ^ index.php [QSA,L]

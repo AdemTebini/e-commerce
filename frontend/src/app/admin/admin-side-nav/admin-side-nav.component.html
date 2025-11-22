@@ -1,34 +1,8 @@
-<aside class="admin-side-nav" [class.collapsed]="isCollapsed">
-  <button
-    type="button"
-    class="nav-toggle"
-    aria-label="Toggle navigation menu"
-    [attr.aria-expanded]="!isCollapsed"
-    (click)="toggleNav()"
-  >
-    <span class="dot"></span>
-    <span class="dot"></span>
-    <span class="dot"></span>
-  </button>
-
-  <nav class="nav-links" role="navigation" aria-label="Admin menu">
-    <a
-      class="linkst"
-      routerLink="/admin/products"
-      routerLinkActive="active"
-      [routerLinkActiveOptions]="{ exact: true }"
-      (click)="closeNav()"
-    >
-      Products List
-    </a>
-    <a
-      class="linkst"
-      routerLink="/admin/products/add"
-      routerLinkActive="active"
-      [routerLinkActiveOptions]="{ exact: true }"
-      (click)="closeNav()"
-    >
-      Add Product
-    </a>
-  </nav>
-</aside>
+<nav class="side-nav">
+  <p class="side-nav__title">Espace admin</p>
+  <a routerLink="/admin/dashboard" routerLinkActive="active">Dashboard</a>
+  <a routerLink="/admin/products" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Liste des produits</a>
+  <a routerLink="/admin/products/add" routerLinkActive="active">Ajouter un produit</a>
+  <a routerLink="/admin/orders" routerLinkActive="active">Commandes</a>
+  <a routerLink="/admin/users" routerLinkActive="active">Utilisateurs</a>
+</nav>

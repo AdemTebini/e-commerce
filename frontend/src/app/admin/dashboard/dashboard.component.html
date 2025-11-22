@@ -1,0 +1,89 @@
+<section class="dashboard">
+  <div class="dashboard-header">
+    <div>
+      <h1>Tableau de Bord</h1>
+      <p class="subtitle">Vue d'ensemble de votre boutique</p>
+    </div>
+    <button type="button" class="btn-refresh" (click)="loadDashboard()">
+      <span class="icon">↻</span>
+      Actualiser
+    </button>
+  </div>
+
+  <div class="stats-grid">
+    <article class="stat-card stat-card--primary">
+      <div class="stat-icon">📦</div>
+      <div class="stat-content">
+        <h3>Total Produits</h3>
+        <div class="stat-value">150</div>
+        <p class="stat-trend positive">+12 ce mois</p>
+      </div>
+    </article>
+
+    <article class="stat-card stat-card--accent">
+      <div class="stat-icon">🛒</div>
+      <div class="stat-content">
+        <h3>Commandes</h3>
+        <div class="stat-value">89</div>
+        <p class="stat-trend positive">+8 aujourd'hui</p>
+      </div>
+    </article>
+
+    <article class="stat-card stat-card--success">
+      <div class="stat-icon">💰</div>
+      <div class="stat-content">
+        <h3>Revenu Total</h3>
+        <div class="stat-value">15,420 DT</div>
+        <p class="stat-trend positive">+15% ce mois</p>
+      </div>
+    </article>
+
+    <article class="stat-card stat-card--info">
+      <div class="stat-icon">👥</div>
+      <div class="stat-content">
+        <h3>Clients Actifs</h3>
+        <div class="stat-value">342</div>
+        <p class="stat-trend neutral">Stable</p>
+      </div>
+    </article>
+  </div>
+
+  <div class="quick-actions">
+    <h2>Actions Rapides</h2>
+    <div class="actions-grid">
+      <a routerLink="/admin/products/add" class="action-card">
+        <div class="action-icon">➕</div>
+        <h3>Ajouter Produit</h3>
+        <p>Créer un nouveau produit</p>
+      </a>
+
+      <a routerLink="/admin/orders" class="action-card">
+        <div class="action-icon">📋</div>
+        <h3>Voir Commandes</h3>
+        <p>Gérer les commandes</p>
+      </a>
+
+      <a routerLink="/admin/products" class="action-card">
+        <div class="action-icon">📊</div>
+        <h3>Gérer Produits</h3>
+        <p>Liste des produits</p>
+      </a>
+
+      <a routerLink="/admin/users" class="action-card">
+        <div class="action-icon">👤</div>
+        <h3>Utilisateurs</h3>
+        <p>Gérer les utilisateurs</p>
+      </a>
+    </div>
+  </div>
+
+  <div class="tips-section">
+    <h2>Conseils & Astuces</h2>
+    <ul class="tips-list">
+      <li *ngFor="let tip of tips" class="tip-item">
+        <span class="tip-icon">💡</span>
+        <span class="tip-text">{{ tip }}</span>
+      </li>
+    </ul>
+  </div>
+</section>

@@ -1,0 +1,120 @@
+<section class="order-detail">
+  <div class="detail-header">
+    <button type="button" class="btn-back" (click)="goBack()">
+      <span class="icon">←</span>
+      Retour
+    </button>
+    <h1>Détails de la Commande</h1>
+  </div>
+
+  <div *ngIf="err" class="error-message">
+    <span class="icon">⚠</span>
+    {{ err }}
+  </div>
+
+  <div *ngIf="order" class="order-content">
+    <div class="order-summary-card">
+      <div class="card-header">
+        <div class="order-number">
+          <span class="label">Commande</span>
+          <span class="value">#{{ order.id }}</span>
+        </div>
+        <div class="order-status" [ngClass]="getStatusClass(order.status)">
+          {{ getStatusLabel(order.status) }}
+        </div>
+      </div>
+
+      <div class="card-body">
+        <div class="info-grid">
+          <div class="info-block">
+            <div class="info-icon">👤</div>
+            <div class="info-content">
+              <span class="info-label">Client</span>
+              <span class="info-value">{{ order.user_name || 'Client #' + order.user_id }}</span>
+            </div>
+          </div>
+
+          <div class="info-block">
+            <div class="info-icon">📍</div>
+            <div class="info-content">
+              <span class="info-label">Adresse</span>
+              <span class="info-value">{{ order.address || 'Non spécifiée' }}</span>
+            </div>
+          </div>
+
+          <div class="info-block">
+            <div class="info-icon">📅</div>
+            <div class="info-content">
+              <span class="info-label">Date de commande</span>
+              <span class="info-value">{{ order.created_at | date:'medium' }}</span>
+            </div>
+          </div>
+
+          <div class="info-block">
+            <div class="info-icon">📞</div>
+            <div class="info-content">
+              <span class="info-label">Téléphone</span>
+              <span class="info-value">{{ order.phone || 'Non spécifié' }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="items-section">
+      <h2>Articles commandés</h2>
+      <div class="items-list">
+        <article *ngFor="let item of order.items" class="item-card">
+          <div class="item-image">
+            <img 
+              *ngIf="item.image" 
+              [src]="'http://localhost/ecommerce/backend/public/uploads/' + item.image" 
+              [alt]="item.title"
+              onerror="this.src='https://via.placeholder.com/100?text=Product'"
+            />
+            <div *ngIf="!item.image" class="image-placeholder">
+              📦
+            </div>
+          </div>
+
+          <div class="item-info">
+            <h3 class="item-title">{{ item.title || 'Produit #' + item.product_id }}</h3>
+            <div class="item-details">
+              <div class="detail-item">
+                <span class="detail-label">Prix unitaire:</span>
+                <span class="detail-value">{{ item.price }} DT</span>
+              </div>
+              <div class="detail-item">
+                <span class="detail-label">Quantité:</span>
+                <span class="detail-value quantity">x{{ item.quantity }}</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="item-total">
+            <span class="total-label">Sous-total</span>
+            <span class="total-value">{{ item.price * item.quantity }} DT</span>
+          </div>
+        </article>
+      </div>
+    </div>
+
+    <div class="order-total-section">
+      <div class="total-card">
+        <div class="total-row">
+          <span class="total-label">Sous-total</span>
+          <span class="total-amount">{{ calculateSubtotal() }} DT</span>
+        </div>
+        <div class="total-row">
+          <span class="total-label">Frais de livraison</span>
+          <span class="total-amount">{{ order.shipping_cost || 7 }} DT</span>
+        </div>
+        <div class="total-row separator"></div>
+        <div class="total-row grand-total">
+          <span class="total-label">Total</span>
+          <span class="total-amount">{{ order.total }} DT</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

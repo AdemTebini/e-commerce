@@ -1,0 +1,258 @@
+<div class="checkout-container">
+	<div class="checkout-header">
+		<h1>
+			<span class="checkout-icon">✓</span>
+			Finaliser la commande
+		</h1>
+		<div class="progress-steps">
+			<div class="step completed">
+				<span class="step-number">1</span>
+				<span class="step-label">Panier</span>
+			</div>
+			<div class="step active">
+				<span class="step-number">2</span>
+				<span class="step-label">Livraison</span>
+			</div>
+			<div class="step">
+				<span class="step-number">3</span>
+				<span class="step-label">Confirmation</span>
+			</div>
+		</div>
+	</div>
+
+	<div *ngIf="!items.length" class="empty-checkout">
+		<div class="empty-icon">🛒</div>
+		<h2>Votre panier est vide</h2>
+		<p>Ajoutez des produits pour passer une commande</p>
+		<button type="button" class="btn-shop" (click)="goToProducts()">
+			<span>🛒</span>
+			Découvrir nos produits
+		</button>
+	</div>
+
+	<div *ngIf="items.length" class="checkout-content">
+		<div class="checkout-form-section">
+			<form (ngSubmit)="submit()">
+				<!-- Shipping Information -->
+				<div class="form-section">
+					<h2>
+						<span class="section-icon">📍</span>
+						Informations de livraison
+					</h2>
+					
+					<div class="form-grid">
+						<div class="form-group full-width">
+							<label for="fullName">
+								<span class="label-icon">👤</span>
+								<span>Nom complet</span>
+								<span class="required">*</span>
+							</label>
+							<input 
+								id="fullName"
+								type="text"
+								[(ngModel)]="fullName" 
+								name="fullName"
+								placeholder="Entrez votre nom complet" 
+								required
+							>
+						</div>
+
+						<div class="form-group full-width">
+							<label for="phone">
+								<span class="label-icon">📞</span>
+								<span>Téléphone</span>
+								<span class="required">*</span>
+							</label>
+							<input 
+								id="phone"
+								type="tel"
+								[(ngModel)]="phone" 
+								name="phone"
+								placeholder="+216 XX XXX XXX" 
+								required
+							>
+						</div>
+
+						<div class="form-group full-width">
+							<label for="line1">
+								<span class="label-icon">🏠</span>
+								<span>Adresse ligne 1</span>
+								<span class="required">*</span>
+							</label>
+							<input 
+								id="line1"
+								type="text"
+								[(ngModel)]="line1" 
+								name="line1"
+								placeholder="Rue, numéro, immeuble" 
+								required
+							>
+						</div>
+
+						<div class="form-group full-width">
+							<label for="line2">
+								<span class="label-icon">📍</span>
+								<span>Adresse ligne 2</span>
+								<span class="optional">(optionnel)</span>
+							</label>
+							<input 
+								id="line2"
+								type="text"
+								[(ngModel)]="line2" 
+								name="line2"
+								placeholder="Appartement, étage, etc."
+							>
+						</div>
+
+						<div class="form-group">
+							<label for="city">
+								<span class="label-icon">🏛️</span>
+								<span>Ville</span>
+								<span class="required">*</span>
+							</label>
+							<input 
+								id="city"
+								type="text"
+								[(ngModel)]="city" 
+								name="city"
+								placeholder="Tunis" 
+								required
+							>
+						</div>
+
+						<div class="form-group">
+							<label for="postalCode">
+								<span class="label-icon">✉️</span>
+								<span>Code postal</span>
+							</label>
+							<input 
+								id="postalCode"
+								type="text"
+								[(ngModel)]="postalCode" 
+								name="postalCode"
+								placeholder="1000"
+							>
+						</div>
+					</div>
+				</div>
+
+				<!-- Payment Method -->
+				<div class="form-section">
+					<h2>
+						<span class="section-icon">💳</span>
+						Méthode de paiement
+					</h2>
+					
+					<div class="payment-methods">
+						<label class="payment-option" [class.selected]="paymentMethod === 'cod'">
+							<input 
+								type="radio" 
+								[(ngModel)]="paymentMethod" 
+								name="paymentMethod" 
+								value="cod"
+							>
+							<div class="payment-content">
+								<span class="payment-icon">💵</span>
+								<div>
+									<div class="payment-title">Paiement à la livraison</div>
+									<div class="payment-desc">Payez en espèces lors de la réception</div>
+								</div>
+							</div>
+						</label>
+
+						<label class="payment-option" [class.selected]="paymentMethod === 'card'">
+							<input 
+								type="radio" 
+								[(ngModel)]="paymentMethod" 
+								name="paymentMethod" 
+								value="card"
+							>
+							<div class="payment-content">
+								<span class="payment-icon">💳</span>
+								<div>
+									<div class="payment-title">Carte bancaire</div>
+									<div class="payment-desc">Paiement sécurisé par carte</div>
+								</div>
+							</div>
+						</label>
+					</div>
+
+					<div class="delivery-info">
+						<span class="delivery-icon">🚚</span>
+						<span>Livraison estimée: <strong>{{ deliveryWindow }}</strong></span>
+					</div>
+				</div>
+
+				<!-- Messages -->
+				<div *ngIf="err" class="error-message">
+					<span class="error-icon">⚠️</span>
+					<span>{{ err }}</span>
+				</div>
+
+				<div *ngIf="msg" class="success-message">
+					<span class="success-icon">✓</span>
+					<span>{{ msg }}</span>
+				</div>
+
+				<!-- Action Buttons -->
+				<div class="form-actions">
+					<button type="button" class="btn-back" (click)="goToProducts()">
+						<span>←</span>
+						Retour aux produits
+					</button>
+					<button type="submit" class="btn-submit" [disabled]="loading">
+						<span *ngIf="loading" class="spinner">⏳</span>
+						<span *ngIf="!loading">✓</span>
+						<span>{{ loading ? 'Validation en cours…' : 'Confirmer la commande' }}</span>
+					</button>
+				</div>
+			</form>
+		</div>
+
+		<!-- Order Summary -->
+		<div class="order-summary">
+			<div class="summary-card">
+				<h2>
+					<span>📋</span>
+					Résumé de la commande
+				</h2>
+
+				<div class="summary-items">
+					<div *ngFor="let item of items" class="summary-item">
+						<div class="item-info">
+							<span class="item-title">{{ item.title }}</span>
+							<span class="item-qty">x{{ item.quantity }}</span>
+						</div>
+						<span class="item-price">{{ (item.price * item.quantity) | number:'1.2-2' }} DT</span>
+					</div>
+				</div>
+
+				<div class="summary-divider"></div>
+
+				<div class="summary-row">
+					<span>Sous-total</span>
+					<span class="amount">{{ total | number:'1.2-2' }} DT</span>
+				</div>
+
+				<div class="summary-row">
+					<span>Livraison</span>
+					<span class="amount" [class.free]="shippingFee === 0">
+						{{ shippingFee === 0 ? 'Offerte' : (shippingFee | number:'1.2-2') + ' DT' }}
+					</span>
+				</div>
+
+				<div *ngIf="shippingFee > 0 && total < 150" class="shipping-notice">
+					<span>🚨</span>
+					<span>Livraison offerte à partir de 150 DT</span>
+				</div>
+
+				<div class="summary-divider"></div>
+
+				<div class="summary-total">
+					<span>Total</span>
+					<span class="total-amount">{{ grandTotal | number:'1.2-2' }} DT</span>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

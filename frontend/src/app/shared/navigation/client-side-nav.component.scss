@@ -1,0 +1,26 @@
+@use './side-nav-base';
+
+.side-nav--client {
+  background: linear-gradient(180deg, var(--color-mauve-600), var(--color-mauve-800));
+  border-right: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.side-nav--client .side-nav__title {
+  color: var(--color-gold-300);
+  font-weight: 700;
+}
+
+.side-nav--client a {
+  transition: all 0.2s ease;
+}
+
+.side-nav--client a:hover {
+  background: rgba(246, 195, 67, 0.15);
+  transform: translateX(4px);
+}
+
+.side-nav--client a.active {
+  background: var(--color-accent);
+  color: var(--color-gray-900);
+  box-shadow: 0 2px 8px rgba(246, 195, 67, 0.3);
+}

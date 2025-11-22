@@ -1,0 +1,4 @@
+<div *ngIf="isVisible" class="alert" [ngClass]="type">
+  <span>{{ message }}</span>
+  <button *ngIf="dismissible" type="button" (click)="dismiss()" aria-label="Dismiss alert">x</button>
+</div>

@@ -1,0 +1,82 @@
+<section class="orders-page">
+  <div class="orders-header">
+    <div>
+      <h1>Gestion des Commandes</h1>
+      <p class="subtitle">Suivez et gérez toutes vos commandes</p>
+    </div>
+    <button type="button" class="btn-refresh" (click)="load()">
+      <span class="icon">↻</span>
+      Actualiser
+    </button>
+  </div>
+
+  <div *ngIf="loading" class="loading-state">
+    <div class="spinner"></div>
+    <p>Chargement des commandes...</p>
+  </div>
+
+  <div *ngIf="err" class="error-message">
+    <span class="icon">⚠</span>
+    {{ err }}
+  </div>
+
+  <div *ngIf="!loading && !orders.length" class="empty-state">
+    <div class="empty-icon">📦</div>
+    <h2>Aucune commande</h2>
+    <p>Les nouvelles commandes apparaîtront ici</p>
+  </div>
+
+  <div *ngIf="!loading && orders.length" class="orders-grid">
+    <article *ngFor="let order of orders" class="order-card">
+      <div class="order-header">
+        <div class="order-number">
+          <span class="order-label">Commande</span>
+          <span class="order-id">#{{ order.id }}</span>
+        </div>
+        <div class="order-status" [ngClass]="getStatusClass(order.status)">
+          {{ getStatusLabel(order.status) }}
+        </div>
+      </div>
+
+      <div class="order-body">
+        <div class="order-info">
+          <div class="info-item">
+            <span class="info-icon">👤</span>
+            <div class="info-content">
+              <span class="info-label">Client</span>
+              <span class="info-value">{{ order.user_name || 'Client #' + order.user_id }}</span>
+            </div>
+          </div>
+
+          <div class="info-item">
+            <span class="info-icon">📅</span>
+            <div class="info-content">
+              <span class="info-label">Date</span>
+              <span class="info-value">{{ order.created_at | date:'short' }}</span>
+            </div>
+          </div>
+
+          <div class="info-item">
+            <span class="info-icon">📦</span>
+            <div class="info-content">
+              <span class="info-label">Articles</span>
+              <span class="info-value">{{ order.items_count || '-' }} produit(s)</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="order-total">
+          <span class="total-label">Total</span>
+          <span class="total-value">{{ order.total }} DT</span>
+        </div>
+      </div>
+
+      <div class="order-footer">
+        <button type="button" class="btn-view" (click)="view(order)">
+          <span class="btn-icon">👁</span>
+          Voir détails
+        </button>
+      </div>
+    </article>
+  </div>
+</section>

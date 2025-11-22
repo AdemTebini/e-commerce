@@ -1,13 +1,13 @@
 import { Component } from '@angular/core';
 import { ApiService } from '../../../services/api';
 import { FormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';
+import { CommonModule, NgIf } from '@angular/common';
 import { firstValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-add-product',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, NgIf],
   templateUrl: './add.html',
   styleUrls: ['./add.css']
 })
@@ -18,7 +18,8 @@ export class AddComponent {
   price = 0;
   stock = 0;
 
-  file?: File;
+  files: File[] = [];
+  imagePreviews: string[] = [];
 
   msg = '';
   err = '';
@@ -27,20 +28,45 @@ export class AddComponent {
 
   onFileChange(event: Event) {
     const input = event.target as HTMLInputElement;
-    this.file = input.files?.[0] || undefined;
+    const fileList = input.files;
     this.msg = '';
+
+    if (fileList && fileList.length > 0) {
+      // Add new files to existing array
+      for (let i = 0; i < fileList.length; i++) {
+        const file = fileList[i];
+        this.files.push(file);
+
+        // Create image preview
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          this.imagePreviews.push(e.target?.result as string);
+        };
+        reader.readAsDataURL(file);
+      }
+    }
+
+    // Reset input to allow selecting same file again
+    input.value = '';
+  }
+
+  removeImage(index: number) {
+    this.files.splice(index, 1);
+    this.imagePreviews.splice(index, 1);
   }
 
   async addProduct() {
     try {
       this.msg = 'Processing...';
 
-      let filename = null;
+      const filenames: string[] = [];
 
-      // upload image
-      if (this.file) {
-        const uploadResponse: any = await firstValueFrom(this.api.uploadImage(this.file));
-        filename = uploadResponse?.filename || null;
+      // upload all images
+      for (const file of this.files) {
+        const uploadResponse: any = await firstValueFrom(this.api.uploadImage(file));
+        if (uploadResponse?.filename) {
+          filenames.push(uploadResponse.filename);
+        }
       }
 
       // create product
@@ -49,7 +75,8 @@ export class AddComponent {
         description: this.description,
         price: this.price,
         stock: this.stock,
-        image: filename
+        main_image: filenames[0] || null,
+        images: filenames.length > 1 ? filenames.slice(1) : []
       };
 
       const res: any = await firstValueFrom(this.api.createProduct(payload));
@@ -70,6 +97,7 @@ export class AddComponent {
     this.description = '';
     this.price = 0;
     this.stock = 0;
-    this.file = undefined;
+    this.files = [];
+    this.imagePreviews = [];
   }
 }

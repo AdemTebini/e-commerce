@@ -1,0 +1,137 @@
+<section class="product-detail-page">
+  <!-- Breadcrumb -->
+  <nav class="breadcrumb">
+    <a routerLink="/" class="breadcrumb-link">Produits</a>
+    <span class="breadcrumb-separator">›</span>
+    <span class="breadcrumb-current">{{ product?.title || 'Détails' }}</span>
+  </nav>
+
+  <!-- Loading State -->
+  <div *ngIf="loading" class="loading-state">
+    <div class="spinner"></div>
+    <p>Chargement du produit...</p>
+  </div>
+
+  <!-- Error State -->
+  <div *ngIf="err && !loading" class="error-state">
+    <div class="error-icon">⚠️</div>
+    <h2>{{ err }}</h2>
+    <a routerLink="/" class="btn-back">Retour aux produits</a>
+  </div>
+
+  <!-- Product Details -->
+  <article *ngIf="product && !loading" class="product-detail">
+    <div class="product-gallery">
+      <div class="main-image">
+        <img [src]="getImageUrl(selectedImage)" [alt]="product.title" />
+        <div class="stock-badge" *ngIf="product.stock < 5 && product.stock > 0">
+          ⚠️ Plus que {{ product.stock }} en stock!
+        </div>
+        <div class="stock-badge out-of-stock" *ngIf="product.stock === 0">
+          ❌ Épuisé
+        </div>
+      </div>
+      <div class="thumbnail-list" *ngIf="product.main_image">
+        <button 
+          type="button"
+          class="thumbnail"
+          [class.active]="selectedImage === product.main_image"
+          (click)="selectImage(product.main_image)">
+          <img [src]="getImageUrl(product.main_image)" [alt]="product.title" />
+        </button>
+      </div>
+    </div>
+
+    <div class="product-info">
+      <h1 class="product-title">{{ product.title }}</h1>
+      
+      <div class="product-price-section">
+        <div class="price-main">
+          <span class="price-value">{{ product.price }}</span>
+          <span class="price-currency">DT</span>
+        </div>
+        <div class="stock-info" [class.low-stock]="product.stock < 5" [class.out-of-stock]="product.stock === 0">
+          <span class="stock-icon">{{ product.stock > 0 ? '✓' : '✕' }}</span>
+          <span class="stock-text">
+            {{ product.stock > 0 ? 'En stock (' + product.stock + ' disponibles)' : 'Rupture de stock' }}
+          </span>
+        </div>
+      </div>
+
+      <div class="product-description">
+        <h3 class="section-title">Description</h3>
+        <p>{{ product.description || 'Aucune description disponible.' }}</p>
+      </div>
+
+      <div class="quantity-selector" *ngIf="product.stock > 0">
+        <label class="quantity-label">Quantité:</label>
+        <div class="quantity-controls">
+          <button 
+            type="button" 
+            class="btn-quantity" 
+            (click)="decrementQuantity()"
+            [disabled]="quantity <= 1">
+            −
+          </button>
+          <input 
+            type="number" 
+            class="quantity-input" 
+            [(ngModel)]="quantity"
+            [min]="1"
+            [max]="product.stock"
+            readonly />
+          <button 
+            type="button" 
+            class="btn-quantity" 
+            (click)="incrementQuantity()"
+            [disabled]="quantity >= product.stock">
+            +
+          </button>
+        </div>
+      </div>
+
+      <div class="action-buttons">
+        <button 
+          type="button" 
+          class="btn-add-cart" 
+          (click)="addToCart()"
+          [disabled]="product.stock === 0">
+          <span class="icon">🛒</span>
+          Ajouter au panier
+        </button>
+        <button 
+          type="button" 
+          class="btn-buy-now" 
+          (click)="buyNow()"
+          [disabled]="product.stock === 0">
+          <span class="icon">⚡</span>
+          Acheter maintenant
+        </button>
+      </div>
+
+      <div class="product-features">
+        <div class="feature">
+          <span class="feature-icon">🚚</span>
+          <div class="feature-text">
+            <strong>Livraison rapide</strong>
+            <span>Livraison sous 2-3 jours</span>
+          </div>
+        </div>
+        <div class="feature">
+          <span class="feature-icon">🔒</span>
+          <div class="feature-text">
+            <strong>Paiement sécurisé</strong>
+            <span>Transactions 100% sécurisées</span>
+          </div>
+        </div>
+        <div class="feature">
+          <span class="feature-icon">↩️</span>
+          <div class="feature-text">
+            <strong>Retours faciles</strong>
+            <span>Retours sous 14 jours</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </article>
+</section>

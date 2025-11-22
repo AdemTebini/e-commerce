@@ -1,15 +1,23 @@
-<div class="app-layout">
-	<div class="app-aurora app-aurora--one"></div>
-	<div class="app-aurora app-aurora--two"></div>
-	<div class="app-aurora app-aurora--three"></div>
+<div class="app-shell" [class.menu-open]="menuOpen()">
+	<app-admin-header
+		(toggleMenu)="toggleMenu()"
+		[currentUser]="currentUser()"
+		[loadingUser]="loadingUser()"
+		[logoutPending]="logoutPending()"
+		(logoutRequested)="handleLogout()"
+	></app-admin-header>
 
-	<section class="app-chrome glass-panel">
-		<app-admin-header></app-admin-header>
-		<div class="app-body">
-			<app-admin-side-nav></app-admin-side-nav>
-			<main class="app-shell" role="main">
-				<router-outlet></router-outlet>
-			</main>
-		</div>
-	</section>
+	<div class="app-shell__body">
+		<aside class="app-shell__side">
+			<ng-container [ngSwitch]="navVariant()">
+				<app-admin-side-nav *ngSwitchCase="'admin'"></app-admin-side-nav>
+				<app-client-side-nav *ngSwitchCase="'client'"></app-client-side-nav>
+				<app-default-side-nav *ngSwitchDefault></app-default-side-nav>
+			</ng-container>
+		</aside>
+
+		<main class="app-shell__content">
+			<router-outlet></router-outlet>
+		</main>
+	</div>
 </div>

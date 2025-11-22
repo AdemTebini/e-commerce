@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../../../services/api';
 import { Router } from '@angular/router';
-import { CommonModule } from '@angular/common';
+import { CommonModule, NgFor, NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-products-list',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, NgIf, NgFor],
   templateUrl: './list.html',
   styleUrls: ['./list.css']
 })

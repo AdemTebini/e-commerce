@@ -1,7 +1,54 @@
-<header class="admin-header" role="banner">
-  <div class="container">
-    <a routerLink="/admin" class="logo" title="Admin Home">
-      <img [src]="logoSrc" alt="Store admin logo" loading="lazy" />
-    </a>
+<header class="admin-header">
+  <button
+    class="admin-header__menu"
+    type="button"
+    aria-label="Toggle navigation menu"
+    (click)="onToggleMenu()"
+  >
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+
+  <div class="admin-header__brand">
+    <img [src]="logoSrc" alt="Aero tune logo" />
+    <div class="admin-header__brand-text">
+      <strong>Aero tune</strong>
+      <small>Administration</small>
+    </div>
+  </div>
+
+  
+
+  <div class="admin-header__auth">
+    <ng-container *ngIf="!loadingUser; else loadingUserTpl">
+      <ng-container *ngIf="currentUser as current; else guestTpl">
+        <a class="profile-chip" routerLink="/profile">
+          <span class="profile-chip__avatar">{{ getInitials(current) }}</span>
+          <span class="profile-chip__details">
+            <strong>{{ current.name || current.email }}</strong>
+            <small>{{ current.role || 'Profil client' }}</small>
+          </span>
+        </a>
+
+        <button
+          class="btn btn--ghost"
+          type="button"
+          (click)="logout()"
+          [disabled]="logoutPending"
+        >
+          {{ logoutPending ? 'Déconnexion…' : 'Déconnexion' }}
+        </button>
+      </ng-container>
+    </ng-container>
+
+    <ng-template #guestTpl>
+      <a class="btn btn--ghost" routerLink="/login">Connexion</a>
+      <a class="btn btn--primary" routerLink="/register">Créer un compte</a>
+    </ng-template>
+
+    <ng-template #loadingUserTpl>
+      <span class="admin-header__loading">Chargement…</span>
+    </ng-template>
   </div>
 </header>

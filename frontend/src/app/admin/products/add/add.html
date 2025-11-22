@@ -1,89 +1,122 @@
-<section class="form-shell slide-up">
-	<header class="form-header">
-		<p class="eyebrow">Inventory</p>
-		<h2>Add new product</h2>
-		<p>Fill in the details to launch a fresh product listing.</p>
-	</header>
+<section class="add-product">
+	<div class="page-header">
+		<h1>Ajouter un Produit</h1>
+		<p class="subtitle">Remplissez les informations du nouveau produit</p>
+	</div>
 
-	<form class="form-grid">
-		<div class="form-group">
-			<label for="title">Product title</label>
-			<input
-				id="title"
-				name="title"
-				[(ngModel)]="title"
-				type="text"
-				placeholder="Enter product title"
-			>
-		</div>
-
-		<div class="form-group">
-			<label for="description">Description</label>
-			<textarea
-				id="description"
-				name="description"
-				[(ngModel)]="description"
-				placeholder="Enter product description"
-			></textarea>
-		</div>
-
-		<div class="form-row-two">
+	<form class="product-form">
+		<div class="form-grid">
 			<div class="form-group">
-				<label for="price">Price ($)</label>
-				<input
+				<label for="title">
+					<span class="label-text">Titre du produit</span>
+					<span class="required">*</span>
+				</label>
+				<input 
+					id="title"
+					type="text"
+					[(ngModel)]="title" 
+					name="title"
+					placeholder="Ex: T-shirt Premium"
+					required
+				>
+			</div>
+
+			<div class="form-group form-group--full">
+				<label for="description">
+					<span class="label-text">Description</span>
+				</label>
+				<textarea 
+					id="description"
+					[(ngModel)]="description" 
+					name="description"
+					placeholder="Décrivez votre produit en détail..."
+					rows="5"
+				></textarea>
+			</div>
+
+			<div class="form-group">
+				<label for="price">
+					<span class="label-text">Prix (DT)</span>
+					<span class="required">*</span>
+				</label>
+				<input 
 					id="price"
+					type="number" 
+					[(ngModel)]="price" 
 					name="price"
-					[(ngModel)]="price"
-					type="number"
-					step="0.01"
 					placeholder="0.00"
+					min="0"
+					step="0.01"
+					required
 				>
 			</div>
 
 			<div class="form-group">
-				<label for="stock">Stock quantity</label>
-				<input
+				<label for="stock">
+					<span class="label-text">Stock</span>
+					<span class="required">*</span>
+				</label>
+				<input 
 					id="stock"
+					type="number" 
+					[(ngModel)]="stock" 
 					name="stock"
-					[(ngModel)]="stock"
-					type="number"
 					placeholder="0"
+					min="0"
+					required
 				>
+			</div>
+
+			<div class="form-group form-group--full">
+				<label for="images">
+					<span class="label-text">Images du produit</span>
+					<span class="image-count" *ngIf="imagePreviews.length > 0">({{ imagePreviews.length }} image(s))</span>
+				</label>
+				<div class="file-input-wrapper">
+					<input 
+						id="images"
+						type="file" 
+						(change)="onFileChange($event)"
+						accept="image/*"
+						class="file-input"
+						multiple
+					>
+					<label for="images" class="file-label">
+						<span class="file-icon">📷</span>
+						<span class="file-text">Choisir des images</span>
+					</label>
+				</div>
+				<div *ngIf="imagePreviews.length > 0" class="images-preview-grid">
+					<div *ngFor="let preview of imagePreviews; let i = index" class="image-preview-item">
+						<img [src]="preview" alt="Aperçu {{ i + 1 }}">
+						<button type="button" class="btn-remove-image" (click)="removeImage(i)" title="Supprimer">
+							✕
+						</button>
+						<div class="image-number">{{ i + 1 }}</div>
+					</div>
+				</div>
 			</div>
 		</div>
 
-		<div class="form-group">
-			<label for="image">Product image </label><br><br>
-			<label class="file-trigger">
-				<input
-					id="image"
-					type="file"
-					accept="image/*"
-					(change)="onFileChange($event)"
-				>
-				<span>{{ file?.name || 'Click to upload or drag a file here' }}</span>
-			</label>
-		</div>
-
-		<div class="form-actions">
-			<button type="button" class="btn btn-ghost" (click)="resetForm()">Reset</button>
-			<button type="button" class="btn btn-primary" (click)="addProduct()">
-				<span>Add product</span>
-			</button>
-		</div>
-
-		<div *ngIf="msg" class="alert alert-success">
-			<svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
-				<path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
-			</svg>
+		<div *ngIf="msg" class="message message--success">
+			<span class="message-icon">✓</span>
 			{{ msg }}
 		</div>
 
-		<div *ngIf="err" class="alert alert-error">
-			<svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
-				<path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" />
-			</svg>
+		<div *ngIf="err" class="message message--error">
+			<span class="message-icon">⚠</span>
 			{{ err }}
+		</div>
+
+		<div class="form-actions">
+			<button type="button" class="btn btn--secondary" (click)="resetForm()">
+				<span class="btn-icon">🔄</span>
+				Réinitialiser
+			</button>
+			<button type="button" class="btn btn--primary" (click)="addProduct()">
+				<span class="btn-icon">➕</span>
+				Ajouter le produit
+			</button>
 		</div>
 	</form>
 </section>

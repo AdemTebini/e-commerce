@@ -1,0 +1,127 @@
+<div class="orders-container">
+	<div class="orders-header">
+		<h1>
+			<span class="orders-icon">📦</span>
+			Mes Commandes
+		</h1>
+		<button type="button" class="btn-refresh" (click)="loadOrders()" [disabled]="loading">
+			<span class="refresh-icon" [class.spinning]="loading">🔄</span>
+			<span>Actualiser</span>
+		</button>
+	</div>
+
+	<div *ngIf="loading" class="loading-state">
+		<div class="spinner-large">⏳</div>
+		<p>Chargement de vos commandes...</p>
+	</div>
+
+	<div *ngIf="err && !loading" class="error-message">
+		<span class="error-icon">⚠️</span>
+		<span>{{ err }}</span>
+	</div>
+
+	<div *ngIf="!loading && !orders.length && !err" class="empty-orders">
+		<div class="empty-icon">📦</div>
+		<h2>Aucune commande</h2>
+		<p>Vous n'avez pas encore passé de commande</p>
+		<a routerLink="/products" class="btn-shop">
+			<span>🛒</span>
+			Commencer vos achats
+		</a>
+	</div>
+
+	<div *ngIf="orders.length && !loading" class="orders-timeline">
+		<div *ngFor="let order of orders; trackBy: trackById" class="order-card">
+			<div class="order-header">
+				<div class="order-info">
+					<h3 class="order-number">
+						<span class="number-icon">#</span>
+						{{ order.id }}
+					</h3>
+					<span class="order-date">
+						<span class="date-icon">📅</span>
+						{{ order.created_at | date:'dd/MM/yyyy à HH:mm' }}
+					</span>
+				</div>
+				<span class="status-badge" [class]="'status-' + order.status">
+					<span class="status-dot"></span>
+					{{ statusLabel(order.status) }}
+				</span>
+			</div>
+
+			<div class="order-content">
+				<!-- Shipping Address -->
+				<div *ngIf="order.address" class="order-section">
+					<div class="section-title">
+						<span class="section-icon">🚚</span>
+						<span>Adresse de livraison</span>
+					</div>
+					<div class="address-info">
+						<div class="address-row">
+							<span class="address-icon">👤</span>
+							<span>{{ order.address.full_name }}</span>
+						</div>
+						<div class="address-row" *ngIf="order.address.phone">
+							<span class="address-icon">📞</span>
+							<span>{{ order.address.phone }}</span>
+						</div>
+						<div class="address-row">
+							<span class="address-icon">🏠</span>
+							<span>{{ order.address.line1 }}</span>
+						</div>
+						<div class="address-row" *ngIf="order.address.line2">
+							<span class="address-icon"></span>
+							<span>{{ order.address.line2 }}</span>
+						</div>
+						<div class="address-row">
+							<span class="address-icon">🏛️</span>
+							<span>{{ order.address.city }}{{ order.address.postal_code ? ', ' + order.address.postal_code : '' }}</span>
+						</div>
+					</div>
+				</div>
+
+				<!-- Order Items -->
+				<div class="order-section">
+					<div class="section-title">
+						<span class="section-icon">📦</span>
+						<span>Articles ({{ order.items?.length || 0 }})</span>
+					</div>
+					<div class="items-list">
+						<div *ngFor="let item of order.items" class="order-item">
+							<div class="item-info">
+								<span class="item-name">{{ item.title || ('Produit #' + item.product_id) }}</span>
+								<span class="item-quantity">x{{ item.quantity }}</span>
+							</div>
+							<span class="item-price" *ngIf="item.price">{{ (item.price * item.quantity) | number:'1.2-2' }} DT</span>
+						</div>
+					</div>
+				</div>
+
+				<!-- Payment Info -->
+				<div class="order-section">
+					<div class="section-title">
+						<span class="section-icon">💳</span>
+						<span>Paiement</span>
+					</div>
+					<div class="payment-info">
+						<div class="payment-row">
+							<span>Méthode</span>
+							<span class="payment-method">
+								<span *ngIf="order.payment_method === 'cod'">💵 Paiement à la livraison</span>
+								<span *ngIf="order.payment_method === 'card'">💳 Carte bancaire</span>
+								<span *ngIf="!order.payment_method">Non spécifié</span>
+							</span>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="order-footer">
+				<div class="order-total">
+					<span class="total-label">Total</span>
+					<span class="total-amount">{{ order.total | number:'1.2-2' }} DT</span>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

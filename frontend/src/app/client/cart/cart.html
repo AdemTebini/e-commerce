@@ -1,0 +1,103 @@
+<div class="cart-container">
+	<div class="cart-header">
+		<h1>
+			<span class="cart-icon">🛒</span>
+			Mon Panier
+		</h1>
+		<p class="cart-count" *ngIf="cartItems.length">{{ cartItems.length }} article(s)</p>
+	</div>
+
+	<div *ngIf="!cartItems.length" class="empty-cart">
+		<div class="empty-icon">🛍️</div>
+		<h2>Votre panier est vide</h2>
+		<p>Découvrez nos produits et ajoutez-les à votre panier</p>
+		<a routerLink="/products" class="btn-shop">
+			<span>🛒</span>
+			Commencer vos achats
+		</a>
+	</div>
+
+	<div *ngIf="cartItems.length" class="cart-content">
+		<div class="cart-items">
+			<div *ngFor="let item of cartItems" class="cart-item">
+				<div class="item-image">
+					<img [src]="getImageUrl(item.image || item.main_image)" [alt]="item.title">
+				</div>
+				
+				<div class="item-details">
+					<h3 class="item-title">{{ item.title }}</h3>
+					<p class="item-price">{{ item.price | number:'1.2-2' }} DT</p>
+					
+					<div class="item-quantity">
+						<button type="button" class="qty-btn" (click)="decreaseQty(item.id, item.quantity)">
+							−
+						</button>
+						<input 
+							type="number" 
+							min="1" 
+							[(ngModel)]="item.quantity" 
+							(ngModelChange)="update(item.id, $event)"
+							class="qty-input"
+						>
+						<button type="button" class="qty-btn" (click)="increaseQty(item.id, item.quantity)">
+							+
+						</button>
+					</div>
+				</div>
+				
+				<div class="item-actions">
+					<div class="item-total">
+						<span class="total-label">Total</span>
+						<span class="total-price">{{ (item.price * item.quantity) | number:'1.2-2' }} DT</span>
+					</div>
+					<button type="button" class="btn-remove" (click)="remove(item.id)" title="Supprimer">
+						<span>🗑️</span>
+						Supprimer
+					</button>
+				</div>
+			</div>
+		</div>
+
+		<div class="cart-summary">
+			<div class="summary-card">
+				<h2>Résumé de la commande</h2>
+				
+				<div class="summary-row">
+					<span>Sous-total</span>
+					<span class="amount">{{ subtotal | number:'1.2-2' }} DT</span>
+				</div>
+				
+				<div class="summary-row">
+					<span>Livraison</span>
+					<span class="amount">{{ shipping | number:'1.2-2' }} DT</span>
+				</div>
+				
+				<div class="summary-divider"></div>
+				
+				<div class="summary-total">
+					<span>Total</span>
+					<span class="total-amount">{{ (subtotal + shipping) | number:'1.2-2' }} DT</span>
+				</div>
+				
+				<button type="button" class="btn-checkout" (click)="checkout()">
+					<span>✓</span>
+					Valider la commande
+				</button>
+				
+				<button type="button" class="btn-clear" (click)="clearCart()">
+					<span>🗑️</span>
+					Vider le panier
+				</button>
+				
+				<a routerLink="/products" class="continue-shopping">
+					<span>←</span>
+					Continuer mes achats
+				</a>
+			</div>
+		</div>
+	</div>
+
+	<div *ngIf="message" class="message">
+		{{ message }}
+	</div>
+</div>

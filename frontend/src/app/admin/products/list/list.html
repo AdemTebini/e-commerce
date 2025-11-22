@@ -1,68 +1,39 @@
-<section class="products-shell slide-up">
-  <header class="section-header">
-    <div>
-      <p class="eyebrow">Inventory overview</p>
-      <h2>Products dashboard</h2>
-      <p class="subtext">Track pricing, stock level, and media from one place.</p>
-    </div>
-    <button type="button" class="btn btn-primary" (click)="goAdd()">
-      <span>Add product</span>
-    </button>
-  </header>
+<section>
+  <h1>Products</h1>
+  <button type="button" (click)="goAdd()">Add product</button>
 
-  <div *ngIf="loading" class="status-card skeleton">Loading latest inventory…</div>
-  <div *ngIf="err" class="alert alert-error">{{ err }}</div>
+  <p *ngIf="loading">Loading…</p>
+  <p *ngIf="err">{{ err }}</p>
 
-  <ng-container *ngIf="products.length; else emptyState">
-    <div class="table-shell">
-      <table>
-        <thead>
-        <tr>
-          <th>#</th>
-          <th>Title</th>
-          <th>Price</th>
-          <th>Stock</th>
-          <th>Image</th>
-          <th class="actions-col">Actions</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr *ngFor="let p of products" class="table-row">
-          <td class="muted">{{ p.id }}</td>
-          <td>
-            <div class="product-name">
-              <strong>{{ p.title }}</strong>
-              <span class="muted">SKU · {{ p.id }}</span>
-            </div>
-          </td>
-          <td><span class="chip">${{ p.price }}</span></td>
-          <td>
-            <span [class.low-stock]="p.stock < 5" class="stock-pill">
-              {{ p.stock }} units
-            </span>
-          </td>
-          <td>
-            <ng-container *ngIf="imageUrl(p.main_image) as imgSrc">
-              <div class="thumb">
-                <img [src]="imgSrc" alt="Product image">
-              </div>
-            </ng-container>
-          </td>
-          <td class="actions-col">
-            <button type="button" class="btn btn-ghost" (click)="goEdit(p.id)">Edit</button>
-            <button type="button" class="btn btn-danger" (click)="deleteProduct(p.id)">Delete</button>
-          </td>
-        </tr>
-        </tbody>
-      </table>
-    </div>
-  </ng-container>
+  <table *ngIf="products.length; else noProducts">
+    <thead>
+    <tr>
+      <th>ID</th>
+      <th>Title</th>
+      <th>Price</th>
+      <th>Stock</th>
+      <th>Image</th>
+      <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let p of products">
+      <td>{{ p.id }}</td>
+      <td>{{ p.title }}</td>
+      <td>{{ p.price }}</td>
+      <td>{{ p.stock }}</td>
+      <td>
+        <img *ngIf="imageUrl(p.main_image) as imgSrc" [src]="imgSrc" alt="Product image" width="60">
+      </td>
+      <td>
+        <button type="button" (click)="goEdit(p.id)">Edit</button>
+        <button type="button" (click)="deleteProduct(p.id)">Delete</button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
 
-  <ng-template #emptyState>
-    <div class="empty-card">
-      <h3>Inventory is empty</h3>
-      <p>No products yet. Start building your catalog in seconds.</p>
-      <button type="button" class="btn btn-primary" (click)="goAdd()">Create first product</button>
-    </div>
+  <ng-template #noProducts>
+    <p>No products yet.</p>
   </ng-template>
 </section>
